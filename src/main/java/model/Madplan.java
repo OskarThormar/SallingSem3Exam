@@ -16,6 +16,10 @@ public class Madplan {
         this.price = price;
     }
 
+    public Madplan(){
+
+    }
+
     public int getId() {
         return id;
     }

@@ -12,6 +12,10 @@ public class MadplanRepository {
         this.madplan = madplan;
     }
 
+    public MadplanRepository() {
+        madplan = new Madplan();
+    }
+
     public double calculatePrice() {
         return 1;
     }
