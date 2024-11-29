@@ -1,6 +1,6 @@
-package repository;
+package salling.sallingsem3exam.repository;
 
-import model.Recipe;
+import salling.sallingsem3exam.model.Recipe;
 
 public class RecipeRepository {
     private Recipe recipe;

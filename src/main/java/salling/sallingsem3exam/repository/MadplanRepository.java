@@ -1,19 +1,17 @@
-package repository;
+package salling.sallingsem3exam.repository;
 
-import model.Madplan;
+import salling.sallingsem3exam.model.Madplan;
+import salling.sallingsem3exam.model.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MadplanRepository {
     private Madplan madplan;
-    private List<Madplan> madplanList;
-
-    public MadplanRepository(Madplan madplan) {
-        this.madplan = madplan;
-    }
+    private List<Madplan> madplanList = new ArrayList<>();
+    private List<Recipe> recipeList = new ArrayList<>();
 
     public MadplanRepository() {
-        madplan = new Madplan();
     }
 
     public double calculatePrice() {
@@ -21,6 +19,11 @@ public class MadplanRepository {
     }
 
     public List<Madplan> getMadplan() {
+        Madplan test = new Madplan();
+        test.setName("test");
+        test.setDays(1);
+        madplanList.add(test);
+
         return madplanList;
     }
 
@@ -29,7 +32,6 @@ public class MadplanRepository {
     }
 
     public void createMadplan(Madplan madplan) {
-
     }
 
     public void editMadplan(Madplan madplan) {

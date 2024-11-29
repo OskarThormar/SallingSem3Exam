@@ -1,17 +1,16 @@
-package model;
+package salling.sallingsem3exam.model;
 
 import java.util.List;
 
 public class Madplan {
     private int id;
-    private List<Recipe> recipeList;
+    private  Recipe[] mealTime = new Recipe[3];
     private String name;
     private double price;
     private List[] days;
 
     public Madplan(int id, List<Recipe> recipeList, String name, double price) {
         this.id = id;
-        this.recipeList = recipeList;
         this.name = name;
         this.price = price;
     }
@@ -24,12 +23,15 @@ public class Madplan {
         return id;
     }
 
-    public List<Recipe> getRecipeList() {
-        return recipeList;
+    public Recipe[] getMealTimeList() {
+        return mealTime;
+    }
+    public void setDays(int days){
+        this.days = new List[days];
     }
 
-    public void setRecipeList(List<Recipe> recipeList) {
-        this.recipeList = recipeList;
+    public List[] getDays() {
+        return days;
     }
 
     public String getName() {

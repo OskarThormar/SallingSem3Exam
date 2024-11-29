@@ -1,10 +1,11 @@
-package model;
+package salling.sallingsem3exam.model;
 
 import java.util.List;
 
 public class Recipe {
     private int id;
     private String name;
+    private String mealTime;
     private List<Ingredients> ingredientsList;
     private double price;
 
@@ -12,6 +13,14 @@ public class Recipe {
         this.name = name;
         this.ingredientsList = ingredientsList;
         this.price = price;
+    }
+
+    public String getMealTime() {
+        return mealTime;
+    }
+
+    public void setMealTime(String mealTime) {
+        this.mealTime = mealTime;
     }
 
     public int getId() {
