@@ -62,4 +62,26 @@ public class MadplanRepository {
         madplanList.add(week2);
     }
 
+    public List<Recipe> getRecipesForMadplan(int madplanId) {
+        for (Madplan madplan : madplanList) {
+            if (madplan.getId() == madplanId) {
+                return madplan.getRecipeList();
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    public double calculateTotalPriceForMadplan(int madplanId) {
+        for (Madplan madplan : madplanList) {
+            if (madplan.getId() == madplanId) {
+                double totalPrice = 0;
+                for (Recipe recipe : madplan.getRecipeList()) {
+                    totalPrice += recipe.getPrice();
+                }
+                return totalPrice;
+            }
+        }
+        return 0;
+    }
+
 }
