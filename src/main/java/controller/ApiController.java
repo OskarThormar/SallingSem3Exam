@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.MadplanService;
+import service.RecipeService;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class ApiController {
   
   private final MadplanService madplanService;
+  private final RecipeService recipeService;
 
     public ApiController(MadplanService madplanService) {
         this.madplanService = madplanService;
