@@ -1,7 +1,9 @@
 package controller;
 
+import model.Recipe;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.MadplanService;
@@ -15,8 +17,9 @@ public class ApiController {
   private final MadplanService madplanService;
   private final RecipeService recipeService;
 
-    public ApiController(MadplanService madplanService) {
+    public ApiController(MadplanService madplanService, RecipeService recipeService) {
         this.madplanService = madplanService;
+        this.recipeService = recipeService;
     }
 
     @GetMapping("/madplan/{id}/recipes")
