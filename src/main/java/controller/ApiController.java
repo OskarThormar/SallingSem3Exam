@@ -1,16 +1,17 @@
 package controller;
 
-import model.Recipe;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.MadplanService;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class ApiController {
-    private final MadplanService madplanService;
+  
+  private final MadplanService madplanService;
 
     public ApiController(MadplanService madplanService) {
         this.madplanService = madplanService;
@@ -24,5 +25,10 @@ public class ApiController {
     @GetMapping("/madplan/{id}/price")
     public double getTotalPriceForMadplan(@PathVariable int id) {
         return madplanService.calculateTotalPriceForMadplan(id);
+    }
+
+    @GetMapping("/")
+    public String index() {
+        return "index";
     }
 }
