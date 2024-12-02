@@ -15,6 +15,11 @@ public class Recipe {
         this.price = price;
     }
 
+    public Recipe(String name, String mealTime){
+        this.name = name;
+        this.mealTime = mealTime;
+    }
+
     public String getMealTime() {
         return mealTime;
     }

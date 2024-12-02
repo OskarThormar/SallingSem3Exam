@@ -32,6 +32,28 @@ public class MadplanRepository {
     }
 
     public void createMadplan(Madplan madplan) {
+        // Assign recipes to mealTime array
+        for (Recipe recipe : recipeList) {
+            if (recipe.getMealTime().equals("morning")) {
+                madplan.getMealTimeList()[0] = recipe;
+            } else if (recipe.getMealTime().equals("frokost")) {
+                madplan.getMealTimeList()[1] = recipe;
+            } else if (recipe.getMealTime().equals("aften")) {
+                madplan.getMealTimeList()[2] = recipe;
+            }
+        }
+
+        // Create lists for each day
+        int numDays = madplan.getDays();
+        madplan.setDays(numDays);
+
+        for (int i = 0; i < numDays; i++) {
+            List<Recipe> dailyRecipes = new ArrayList<>();
+            dailyRecipes.add(madplan.getMealTimeList()[0]);
+            dailyRecipes.add(madplan.getMealTimeList()[1]);
+            dailyRecipes.add(madplan.getMealTimeList()[2]);
+            madplan.getDays()[i] = dailyRecipes;
+        }
     }
 
     public void editMadplan(Madplan madplan) {
