@@ -1,19 +1,34 @@
-package model;
+package salling.sallingsem3exam.model;
 
+import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Recipe {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
-    private List<Ingredients> ingredientsList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe_id")
+    private List<Ingredients> ingredientsList = new ArrayList<>();
+
     private double price;
 
+    // Constructors
     public Recipe(String name, List<Ingredients> ingredientsList, double price) {
         this.name = name;
         this.ingredientsList = ingredientsList;
         this.price = price;
     }
 
+    public Recipe() {}
+
+    // Getters and Setters
     public int getId() {
         return id;
     }

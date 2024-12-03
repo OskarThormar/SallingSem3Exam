@@ -1,8 +1,7 @@
-package repository;
+package salling.sallingsem3exam.repository;
 
-import model.Ingredients;
-import model.Madplan;
-import model.Recipe;
+import salling.sallingsem3exam.model.Madplan;
+import salling.sallingsem3exam.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;

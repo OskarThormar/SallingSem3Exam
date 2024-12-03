@@ -1,8 +1,7 @@
-package service;
+package salling.sallingsem3exam.service;
 
-import model.Madplan;
-import model.Recipe;
-import repository.MadplanRepository;
+import salling.sallingsem3exam.model.Recipe;
+import salling.sallingsem3exam.repository.MadplanRepository;
 
 import java.util.List;
 

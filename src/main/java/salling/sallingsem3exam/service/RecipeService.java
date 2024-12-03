@@ -1,6 +1,6 @@
-package service;
+package salling.sallingsem3exam.service;
 
-import repository.RecipeRepository;
+import salling.sallingsem3exam.repository.RecipeRepository;
 
 
 

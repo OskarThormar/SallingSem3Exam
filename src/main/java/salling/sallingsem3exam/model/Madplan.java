@@ -1,14 +1,29 @@
-package model;
+package salling.sallingsem3exam.model;
 
+import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Madplan {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private List<Recipe> recipeList;
+
     private String name;
     private double price;
-    private List[] days;
 
+    // Mapping a one-to-many relationship with Recipe
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "madplan_id")
+    private List<Recipe> recipeList = new ArrayList<>();
+
+    // Days as a list of recipes, assuming each day contains a recipe
+    @ElementCollection
+    private List<String> days = new ArrayList<>();
+
+    // Constructors
     public Madplan(int id, List<Recipe> recipeList, String name, double price) {
         this.id = id;
         this.recipeList = recipeList;
@@ -16,6 +31,10 @@ public class Madplan {
         this.price = price;
     }
 
+    public Madplan() {
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -44,7 +63,11 @@ public class Madplan {
         this.price = price;
     }
 
-    public void setAmountOfDays(int days) {
-        this.days = new List[days];
+    public List<String> getDays() {
+        return days;
+    }
+
+    public void setDays(List<String> days) {
+        this.days = days;
     }
 }
