@@ -5,6 +5,7 @@ import salling.sallingsem3exam.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MadplanRepository {
     private Madplan madplan;
@@ -44,21 +45,42 @@ public class MadplanRepository {
 
     public void createMadplan(Madplan madplan) {
         Recipe[] mealTime = new Recipe[3];
+        Random random = new Random();
+
+        List<Recipe> morningRecipes = new ArrayList<>();
+        List<Recipe> lunchRecipes = new ArrayList<>();
+        List<Recipe> eveningRecipes = new ArrayList<>();
+
+
+        int randomRecipe = random.nextInt(recipeList.size());
+
+
         for (Recipe recipe : recipeList) {
             if ("morning".equalsIgnoreCase(recipe.getMealTime())) {
-                mealTime[0] = recipe;
+                morningRecipes.add(recipe);
             } else if ("lunch".equalsIgnoreCase(recipe.getMealTime())) {
-                mealTime[1] = recipe;
+                lunchRecipes.add(recipe);
             } else if ("evening".equalsIgnoreCase(recipe.getMealTime())) {
-                mealTime[2] = recipe;
+                eveningRecipes.add(recipe);
             }
         }
 
-        for (int i = 0; i < mealTime.length; i++) {
-            if (mealTime[i] == null) {
-                throw new IllegalStateException("Missing recipe for " +
-                        (i == 0 ? "morning" : i == 1 ? "lunch" : "evening") + " meal.");
-            }
+        if (!morningRecipes.isEmpty()) {
+            mealTime[0] = morningRecipes.get(random.nextInt(morningRecipes.size()));
+        } else {
+            throw new IllegalStateException("No recipes available for morning.");
+        }
+
+        if (!lunchRecipes.isEmpty()) {
+            mealTime[1] = lunchRecipes.get(random.nextInt(lunchRecipes.size()));
+        } else {
+            throw new IllegalStateException("No recipes available for lunch.");
+        }
+
+        if (!eveningRecipes.isEmpty()) {
+            mealTime[2] = eveningRecipes.get(random.nextInt(eveningRecipes.size()));
+        } else {
+            throw new IllegalStateException("No recipes available for evening.");
         }
 
         madplan.setMealTime(mealTime);
