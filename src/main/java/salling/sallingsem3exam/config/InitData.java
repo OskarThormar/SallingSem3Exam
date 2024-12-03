@@ -62,6 +62,17 @@ public class InitData implements CommandLineRunner {
         m1.setPrice(15.0);
         m1.setAmountOfDays(7);
 
+        List<String> days = new ArrayList<>();
+        days.add("Monday");
+        days.add("Tuesday");
+        days.add("Wednesday");
+        days.add("Thursday");
+        days.add("Friday");
+        days.add("Saturday");
+        days.add("Sunday");
+
+        m1.setDays(days); // Assign the list of days to Madplan
+
         // Adding recipes to Madplan
         m1.getRecipeList().add(recipe1);
         m1.getRecipeList().add(recipe2);

@@ -15,7 +15,7 @@ public class Madplan {
     private double price;
 
     // Mapping a one-to-many relationship with Recipe
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "madplan_id")
     private List<Recipe> recipeList = new ArrayList<>();
 
@@ -69,5 +69,10 @@ public class Madplan {
 
     public void setDays(List<String> days) {
         this.days = days;
+    }
+
+    public void setAmountOfDays(int days) {
+        // Initialize a List of days with the size of 'days'
+        this.days = new ArrayList<>(days);
     }
 }

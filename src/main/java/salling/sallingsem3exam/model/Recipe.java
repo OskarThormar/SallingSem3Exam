@@ -13,7 +13,7 @@ public class Recipe {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private List<Ingredients> ingredientsList = new ArrayList<>();
 
