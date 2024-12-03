@@ -14,4 +14,9 @@ public class BaseController {
     public String showFoodPlans(){
         return "showFoodPlans";
     }
+
+    @GetMapping("/createFoodplan")
+    public String createFoodplan(){
+        return "createFoodPlan";
+    }
 }

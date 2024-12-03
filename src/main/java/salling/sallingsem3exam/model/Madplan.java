@@ -4,10 +4,12 @@ import java.util.List;
 
 public class Madplan {
     private int id;
-    private  Recipe[] mealTime = new Recipe[3];
+    private  Recipe[] mealTime;
     private String name;
     private double price;
-    private List[] days;
+    private int days;
+    private List[] recipeListForMultipleDays = new List[days];
+
 
     public Madplan(int id, List<Recipe> recipeList, String name, double price) {
         this.id = id;
@@ -26,12 +28,16 @@ public class Madplan {
     public Recipe[] getMealTimeList() {
         return mealTime;
     }
-    public void setDays(int days){
-        this.days = new List[days];
+    public void setRecipeListForMultipleDays(int recipeListForMultipleDays){
+        this.recipeListForMultipleDays = new List[recipeListForMultipleDays];
     }
 
-    public List[] getDays() {
-        return days;
+    public void setMealTime(Recipe[] mealTime) {
+        this.mealTime = mealTime;
+    }
+
+    public List[] getRecipeListForMultipleDays() {
+        return recipeListForMultipleDays;
     }
 
     public String getName() {
@@ -50,7 +56,11 @@ public class Madplan {
         this.price = price;
     }
 
-    public void setAmountOfDays(int days) {
-        this.days = new List[days];
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public int getDays() {
+        return days;
     }
 }

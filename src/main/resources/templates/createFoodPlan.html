@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Create food plan</h1>
+
+    <form id="newFoodplan">
+        <label for="name">Food plan Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="days">mealTime:</label>
+        <input type="text" id="days" name="days" required><br><br>
+
+        <button type="submit">Create food Plan</button>
+    </form>
+
+    <script>
+        document.getElementById("newFoodplan").addEventListener('submit', function (e){
+            e.preventDefault();
+
+            const newFoodPlan = {
+                name: document.getElementById('name').value,
+                days: document.getElementById('days').value
+            }
+
+            fetch('/api/plan/foodPlan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newFoodPlan)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Foodplan created:', data);
+                    window.location.href = '/showFoodplans'
+                })
+                .catch(error => console.error('Error creating the foodplan:', error));
+        });
+    </script>
+</body>
+</html>

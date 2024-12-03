@@ -9,7 +9,7 @@ import java.util.List;
 public class MadplanRepository {
     private Madplan madplan;
     private List<Madplan> madplanList = new ArrayList<>();
-    private List<Recipe> recipeList = new ArrayList<>();
+    public List<Recipe> recipeList = new ArrayList<>();
 
     public MadplanRepository() {
     }
@@ -19,10 +19,21 @@ public class MadplanRepository {
     }
 
     public List<Madplan> getMadplan() {
-        Madplan test = new Madplan();
-        test.setName("test");
-        test.setDays(1);
-        madplanList.add(test);
+        Recipe test1 = new Recipe("test1", "morning");
+        Recipe test2 = new Recipe("test2", "evening");
+        Recipe test3 = new Recipe("test3", "lunch");
+        Recipe test4 = new Recipe("test4", "lunch");
+        Recipe test5 = new Recipe("test5", "evening");
+        Recipe test6 = new Recipe("test6", "morning");
+        Recipe test7 = new Recipe("test7", "morning");
+
+        recipeList.add(test1);
+        recipeList.add(test2);
+        recipeList.add(test3);
+        recipeList.add(test4);
+        recipeList.add(test5);
+        recipeList.add(test6);
+        recipeList.add(test7);
 
         return madplanList;
     }
@@ -32,28 +43,36 @@ public class MadplanRepository {
     }
 
     public void createMadplan(Madplan madplan) {
-        // Assign recipes to mealTime array
+        Recipe[] mealTime = new Recipe[3];
         for (Recipe recipe : recipeList) {
-            if (recipe.getMealTime().equals("morning")) {
-                madplan.getMealTimeList()[0] = recipe;
-            } else if (recipe.getMealTime().equals("frokost")) {
-                madplan.getMealTimeList()[1] = recipe;
-            } else if (recipe.getMealTime().equals("aften")) {
-                madplan.getMealTimeList()[2] = recipe;
+            if ("morning".equalsIgnoreCase(recipe.getMealTime())) {
+                mealTime[0] = recipe;
+            } else if ("lunch".equalsIgnoreCase(recipe.getMealTime())) {
+                mealTime[1] = recipe;
+            } else if ("evening".equalsIgnoreCase(recipe.getMealTime())) {
+                mealTime[2] = recipe;
             }
         }
 
-        // Create lists for each day
-        int numDays = madplan.getDays();
-        madplan.setDays(numDays);
+        for (int i = 0; i < mealTime.length; i++) {
+            if (mealTime[i] == null) {
+                throw new IllegalStateException("Missing recipe for " +
+                        (i == 0 ? "morning" : i == 1 ? "lunch" : "evening") + " meal.");
+            }
+        }
 
+        madplan.setMealTime(mealTime);
+
+        int numDays = madplan.getRecipeListForMultipleDays().length;
         for (int i = 0; i < numDays; i++) {
             List<Recipe> dailyRecipes = new ArrayList<>();
-            dailyRecipes.add(madplan.getMealTimeList()[0]);
-            dailyRecipes.add(madplan.getMealTimeList()[1]);
-            dailyRecipes.add(madplan.getMealTimeList()[2]);
-            madplan.getDays()[i] = dailyRecipes;
+            dailyRecipes.add(mealTime[0]); // Morning
+            dailyRecipes.add(mealTime[1]); // Lunch
+            dailyRecipes.add(mealTime[2]); // Evening
+            madplan.getRecipeListForMultipleDays()[i] = dailyRecipes;
         }
+
+        madplanList.add(madplan);
     }
 
     public void editMadplan(Madplan madplan) {

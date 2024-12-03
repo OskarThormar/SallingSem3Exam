@@ -7,7 +7,7 @@
 <body>
 <h1>These are your food plans!</h1>
 <div id="madplan-container"></div>
-
+<button id="createFoodPlanBtn">create food plan</button>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         fetch('/api/plan/foodPlan')
@@ -28,6 +28,10 @@
             .catch(error => {
                 console.error('Error fetching madplan data:', error);
             });
+
+        document.getElementById('createFoodPlanBtn').addEventListener('click', function () {
+            window.location.href = 'createFoodplan';
+        });
     });
 </script>
 </body>
