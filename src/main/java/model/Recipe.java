@@ -1,10 +1,18 @@
 package model;
 
+import jakarta.persistence.*;
+import org.hibernate.engine.internal.Cascade;
+
 import java.util.List;
 
+@Entity
 public class Recipe {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @OneToMany
     private List<Ingredients> ingredientsList;
     private double price;
 
@@ -12,6 +20,10 @@ public class Recipe {
         this.name = name;
         this.ingredientsList = ingredientsList;
         this.price = price;
+    }
+
+    public Recipe() {
+
     }
 
     public int getId() {

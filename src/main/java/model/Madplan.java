@@ -1,19 +1,34 @@
 package model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
 public class Madplan {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @OneToMany
     private List<Recipe> recipeList;
     private String name;
     private double price;
-    private List[] days;
+    /**
+     Find ud af en anden måde at differentiere opskrifter mellem morgen, middag og aften.
+     **/
+    //private List[] days;
 
     public Madplan(int id, List<Recipe> recipeList, String name, double price) {
         this.id = id;
         this.recipeList = recipeList;
         this.name = name;
         this.price = price;
+    }
+
+    public Madplan() {
+
     }
 
     public int getId() {
@@ -42,9 +57,5 @@ public class Madplan {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public void setAmountOfDays(int days) {
-        this.days = new List[days];
     }
 }

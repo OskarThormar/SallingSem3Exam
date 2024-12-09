@@ -17,6 +17,10 @@ public class ApiController {
   private final MadplanService madplanService;
   private final RecipeService recipeService;
 
+    /**
+     * Arbejd videre med APIcontroller til refaktorisering af JPA
+     */
+
     public ApiController(MadplanService madplanService, RecipeService recipeService) {
         this.madplanService = madplanService;
         this.recipeService = recipeService;
