@@ -1,6 +1,7 @@
 package service;
 
 import model.Madplan;
+import model.MadplanInterface;
 import model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class MadplanService {
     private MadplanRepository madplanRepository;
 
     @Autowired
-    private model.MadplanRepository madplanInterface;
+    private MadplanInterface madplanInterface;
 
     public MadplanService(MadplanRepository madplanRepository) {
         this.madplanRepository = madplanRepository;
