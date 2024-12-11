@@ -1,11 +1,18 @@
 package salling.sallingsem3exam.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
 public class Recipe {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String mealTime;
+    @OneToMany
     private List<Ingredients> ingredientsList;
     private double price;
 
@@ -18,6 +25,10 @@ public class Recipe {
     public Recipe(String name, String mealTime){
         this.name = name;
         this.mealTime = mealTime;
+    }
+
+    public Recipe() {
+
     }
 
     public String getMealTime() {
