@@ -1,4 +1,3 @@
-/*
 package salling.sallingsem3exam.controller;
 
 import salling.sallingsem3exam.model.Recipe;
@@ -26,14 +25,13 @@ public class ApiController {
         return madplanService.getRecipesFromMadplan(id);
     }
 
-    @GetMapping("/madplan/{id}/price")
+    /*@GetMapping("/madplan/{id}/price")
     public double getTotalPriceForMadplan(@PathVariable int id) {
         return madplanService.calculateTotalPriceForMadplan(id);
-    }
+    }*/
 
     @GetMapping("/")
     public String index() {
         return "index";
     }
 }
-*/

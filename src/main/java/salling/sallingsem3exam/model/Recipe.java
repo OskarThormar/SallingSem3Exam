@@ -19,6 +19,8 @@ public class Recipe {
 
     private double price;
 
+    private String mealTime;
+
     // Constructors
     public Recipe(String name, List<Ingredients> ingredientsList, double price) {
         this.name = name;

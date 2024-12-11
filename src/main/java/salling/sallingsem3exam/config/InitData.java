@@ -62,14 +62,28 @@ public class InitData implements CommandLineRunner {
         m1.setPrice(15.0);
         m1.setAmountOfDays(7);
 
+       // int var = 0;
+       // for (int i = 0; i < userInput; i++) {
+       //     Day day = new Day;
+       //     day.setName("day" + var);
+       //     var++;
+       // }
+       //
+       // for(Day day : daysList){
+       //     if(day.getMorning() == null){
+       //         day.setMorning(morningList.get(randomInt));
+       //     }
+       //     if(day.getLunch())
+       // }
+
         List<String> days = new ArrayList<>();
-        days.add("Monday");
-        days.add("Tuesday");
-        days.add("Wednesday");
-        days.add("Thursday");
-        days.add("Friday");
-        days.add("Saturday");
-        days.add("Sunday");
+        days.add("morgenmad_1");
+        days.add("middag_1");
+        days.add("aften_1");
+        days.add("Dag_4");
+        days.add("Dag_5");
+        days.add("Dag_6");
+        days.add("Dag_7");
 
         m1.setDays(days); // Assign the list of days to Madplan
 
@@ -102,4 +116,5 @@ public class InitData implements CommandLineRunner {
             System.out.println(recipe.toString());
         }
     }
+
 }

@@ -1,11 +1,12 @@
 package salling.sallingsem3exam.repository;
 
+import org.springframework.stereotype.Repository;
 import salling.sallingsem3exam.model.Madplan;
 import salling.sallingsem3exam.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class MadplanRepository {
     private Madplan madplan;
     private List<Madplan> madplanList;
