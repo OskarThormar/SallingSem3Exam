@@ -1,39 +1,69 @@
 package controller;
 
-import model.Recipe;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import service.MadplanService;
-import service.RecipeService;
+import model.Ingredients;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class ApiController {
-  
-  private final MadplanService madplanService;
-  private final RecipeService recipeService;
 
-    public ApiController(MadplanService madplanService, RecipeService recipeService) {
-        this.madplanService = madplanService;
-        this.recipeService = recipeService;
-    }
+    @Value("${api.token}")
+    private String apiToken;
 
-    @GetMapping("/madplan/{id}/recipes")
-    public List<Recipe> getRecipesForMadplan(@PathVariable int id) {
-        return madplanService.getRecipesFromMadplan(id);
-    }
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    @GetMapping("/madplan/{id}/price")
-    public double getTotalPriceForMadplan(@PathVariable int id) {
-        return madplanService.calculateTotalPriceForMadplan(id);
-    }
+    // Henter søge-resultater som JSON
+    @GetMapping("/search-results")
+    public ResponseEntity<List<Ingredients>> searchProductsJSON(@RequestParam String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(List.of());
+        }
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
+        String url = "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query="
+                + URLEncoder.encode(query, StandardCharsets.UTF_8);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiToken);
+
+        try {
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                List<Map<String, Object>> suggestions = (List<Map<String, Object>>) response.getBody().get("suggestions");
+                List<Ingredients> products = new ArrayList<>();
+
+                if (suggestions != null) {
+                    for (Map<String, Object> suggestion : suggestions) {
+                        Ingredients product = new Ingredients(
+                                suggestion.get("title") != null ? suggestion.get("title").toString() : "Unknown",
+                                suggestion.get("price") != null ? Double.parseDouble(suggestion.get("price").toString()) : 0.0,
+                                "N/A", 1
+                        );
+                        products.add(product);
+                    }
+                }
+
+                return ResponseEntity.ok(products);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(List.of());
     }
 }
