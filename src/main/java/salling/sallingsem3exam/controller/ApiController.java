@@ -18,9 +18,9 @@ public class ApiController {
         return madplan;
     }
 
-    @PostMapping("/api/plan/foodPlan")
-    public Madplan createFoodplan(@RequestBody Madplan newMadplan){
-        MPR.createMadplan(newMadplan);
-        return newMadplan;
-    }
+//    @PostMapping("/api/plan/foodPlan")
+//    public Madplan createFoodplan(@RequestBody Madplan newMadplan){
+//        MPR.createMadplan(newMadplan);
+//        return newMadplan;
+//    }
 }

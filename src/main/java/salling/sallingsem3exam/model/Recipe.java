@@ -16,10 +16,10 @@ public class Recipe {
     private List<Ingredients> ingredientsList;
     private double price;
 
-    public Recipe(String name, List<Ingredients> ingredientsList, double price) {
+    public Recipe(String name, double price, String mealTime) {
         this.name = name;
-        this.ingredientsList = ingredientsList;
         this.price = price;
+        this.mealTime = mealTime;
     }
 
     public Recipe(String name, String mealTime){

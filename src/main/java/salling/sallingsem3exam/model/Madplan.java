@@ -13,9 +13,9 @@ public class Madplan {
     private int id;
     private String name;
     private double price;
-
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "madplan", orphanRemoval = true)
     List<Day> days = new ArrayList<>();
+
 
     public Madplan(int id, List<Recipe> recipeList, String name, double price) {
         this.id = id;
@@ -25,6 +25,10 @@ public class Madplan {
 
     public Madplan(){
 
+    }
+
+    public List<Day> getDays() {
+        return days;
     }
 
     public int getId() {

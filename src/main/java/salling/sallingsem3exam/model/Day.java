@@ -8,15 +8,21 @@ public class Day {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int ID;
     private String name;
-    @OneToOne
+
+    @ManyToOne
+    @JoinColumn(name = "madplan_id")  // This is the foreign key column for Madplan
+    private Madplan madplan;
+
+    @OneToOne()
     private Recipe morningRecipe;
-    @OneToOne
+
+    @OneToOne()
     private Recipe lunchRecipe;
-    @OneToOne
+
+    @OneToOne()
     private Recipe eveningRecipe;
 
-    public Day(){
-
+    public Day() {
     }
 
     public int getID() {
@@ -57,5 +63,13 @@ public class Day {
 
     public void setMorningRecipe(Recipe morningRecipe) {
         this.morningRecipe = morningRecipe;
+    }
+
+    public Madplan getMadplan() {
+        return madplan;
+    }
+
+    public void setMadplan(Madplan madplan) {
+        this.madplan = madplan;
     }
 }
