@@ -56,4 +56,14 @@ public class Recipe {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", ingredientsList=" + ingredientsList +
+                ", price=" + price +
+                '}';
+    }
 }

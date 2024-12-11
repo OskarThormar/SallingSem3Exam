@@ -93,5 +93,13 @@ public class InitData implements CommandLineRunner {
         madplanRepository.save(m2);
 
         System.out.println("Sample data initialized");
+
+    }
+
+    public void getRecipeList() {
+        List<Recipe> recipeList = recipeRepository.findAll();
+        for (Recipe recipe : recipeList) {
+            System.out.println(recipe.toString());
+        }
     }
 }

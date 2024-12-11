@@ -9,6 +9,7 @@ import java.util.List;
 public class MadplanRepository {
     private Madplan madplan;
     private List<Madplan> madplanList;
+    private RecipeRepositoryInterface recipeRepository;
 
     public MadplanRepository(Madplan madplan) {
         this.madplan = madplan;
@@ -70,7 +71,8 @@ public class MadplanRepository {
         return new ArrayList<>();
     }
 
-    public double calculateTotalPriceForMadplan(int madplanId) {
+    /*public double calculateTotalPriceForMadplan(int madplanId) {
+        List<Recipe> recipe = recipeRepository.findAll();
         for (Madplan madplan : madplanList) {
             if (madplan.getId() == madplanId) {
                 double totalPrice = 0;
@@ -81,6 +83,6 @@ public class MadplanRepository {
             }
         }
         return 0;
-    }
+    }*/
 
 }
