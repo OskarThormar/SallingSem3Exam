@@ -14,6 +14,9 @@ public class Ingredients {
         this.quantity = quantity;
     }
 
+    public Ingredients(String name, double price) {
+    }
+
     public int getId() {
         return id;
     }
