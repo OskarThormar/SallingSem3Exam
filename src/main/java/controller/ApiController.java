@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 public class ApiController {
   
@@ -56,13 +57,20 @@ public class ApiController {
         return "search";
     }
 
+    @GetMapping("/api-token")
+    @ResponseBody
+    public String getApiToken() {
+        return "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query";
+    }
+
+    @CrossOrigin(origins = "http://localhost:8080") // Tillad kun anmodninger fra din frontend
     @GetMapping("/search")
-    public ResponseEntity<List<Ingredients>> searchProducts(@RequestParam String query) {
+    public ResponseEntity<List<Ingredients>> searchProducts(@RequestParam String query, @ModelAttribute("https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query=") String apiUrl) {
         if (query == null || query.trim().isEmpty()) {
             return ResponseEntity.badRequest().body(List.of());
         }
 
-        String url = "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
+        String url = "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query" + "=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiToken);
