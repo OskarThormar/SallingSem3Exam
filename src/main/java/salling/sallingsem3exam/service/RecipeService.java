@@ -1,9 +1,10 @@
-package service;
+package salling.sallingsem3exam.service;
 
-import repository.RecipeRepository;
+import org.springframework.stereotype.Service;
+import salling.sallingsem3exam.repository.RecipeRepository;
 
 
-
+@Service
 public class RecipeService {
 
     private RecipeRepository recipeRepository;
