@@ -14,12 +14,15 @@ public class Day {
     private Madplan madplan;
 
     @ManyToOne
+    @JoinColumn(name = "morning_recipe_id")
     private Recipe morningRecipe;
 
     @ManyToOne
+    @JoinColumn(name = "lunch_recipe_id")
     private Recipe lunchRecipe;
 
     @ManyToOne
+    @JoinColumn(name = "evening_recipe_id")
     private Recipe eveningRecipe;
 
     public Day() {

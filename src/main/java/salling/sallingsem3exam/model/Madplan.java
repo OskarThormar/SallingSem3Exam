@@ -13,7 +13,7 @@ public class Madplan {
     private int id;
     private String name;
     private double price;
-    @ManyToMany
+    @OneToMany
     List<Day> days = new ArrayList<>();
 
 

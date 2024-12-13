@@ -84,15 +84,12 @@ public class InitData implements CommandLineRunner {
         for(Recipe recipe : allRecipes){
             if(recipe.getMealTime().equalsIgnoreCase("morning")){
                 morningRecipes.add(recipe);
-                break;
             }
             if(recipe.getMealTime().equalsIgnoreCase("lunch")){
                 lunchRecipes.add(recipe);
-                break;
             }
             if(recipe.getMealTime().equalsIgnoreCase("dinner")){
                 dinnerRecipes.add(recipe);
-                break;
             }
         }
 
@@ -117,12 +114,16 @@ public class InitData implements CommandLineRunner {
     }
 
     public void createDays(int userInput, Madplan madplan) {
+        madplan = madplanInterface.save(madplan);
+
         int dayName = 0;
 
         for (int i = 0; i < userInput; i++) {
             Day day = new Day();
             day.setName("day" + dayName);
             dayName++;
+            day.setMadplan(madplan);
+
             madplan.getDays().add(day);
         }
 
