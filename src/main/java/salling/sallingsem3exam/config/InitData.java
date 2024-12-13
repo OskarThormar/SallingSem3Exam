@@ -49,12 +49,12 @@ public class InitData implements CommandLineRunner {
         Ingredients ing3 = new Ingredients("Bread", 2.0, "loaf", 1);
         Ingredients ing4 = new Ingredients("Lettuce", 1.0, "head", 1);
 
-        ingredientsRepository.save(ing1);
-        ingredientsRepository.save(ing2);
-        ingredientsRepository.save(ing3);
-        ingredientsRepository.save(ing4);
+        List<Ingredients> allIngredients = new ArrayList<>();
 
-        List<Ingredients> allIngredients = ingredientsRepository.findAll();
+        allIngredients.add(ing1);
+        allIngredients.add(ing2);
+        allIngredients.add(ing3);
+        allIngredients.add(ing4);
 
         Recipe recipe1 = new Recipe("Cheese Sandwich", 5.5, "morning");
         Recipe recipe2 = new Recipe("Veggie Sandwich", 4.0,"lunch");
@@ -63,13 +63,6 @@ public class InitData implements CommandLineRunner {
         recipe1.setIngredientsList(allIngredients);
         recipe2.setIngredientsList(allIngredients);
         recipe3.setIngredientsList(allIngredients);
-
-
-        recipeRepository.save(recipe1);
-        recipeRepository.save(recipe2);
-        recipeRepository.save(recipe3);
-
-        allRecipes = recipeRepository.findAll();
 
         for(Recipe recipe : allRecipes){
             if(recipe.getMealTime().equalsIgnoreCase("morning")){
