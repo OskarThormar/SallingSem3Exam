@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:8080") // Tillad kun anmodninger fra din frontend
-@RestController
+@Controller
 public class ApiController {
   
     private final MadplanService madplanService;
@@ -63,56 +63,6 @@ public class ApiController {
     @ResponseBody
     public String getApiToken() {
         return "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query";
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<Ingredients>> searchProducts(@RequestParam(required = false) String query, @ModelAttribute("https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query=") String apiUrl) {
-        if (query == null || query.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body(List.of());
-        }
-
-        String url = "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + apiToken);
-        headers.set("Access-Control-Allow-Origin", "*");  // Add this header
-
-
-
-        try {
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    url,
-                    HttpMethod.GET,
-                    new HttpEntity<>(headers),
-                    new ParameterizedTypeReference<>() {}
-            );
-
-
-            if (response.getStatusCode() != HttpStatus.OK || response.getBody() == null) {
-                return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(List.of());
-            }
-
-            List<Map<String, Object>> suggestions = (List<Map<String, Object>>) response.getBody().get("suggestions");
-
-            if (suggestions == null || suggestions.isEmpty()) {
-                return ResponseEntity.ok(List.of());
-            }
-
-            List<Ingredients> products = suggestions.stream()
-                    .map(suggestion -> new Ingredients(
-                            suggestion.get("name").toString(),
-                            suggestion.get("price") != null
-                                    ? Double.parseDouble(suggestion.get("price").toString())
-                                    : 0.0
-                    ))
-                    .toList();
-
-            return ResponseEntity.ok(products);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(List.of());
-        }
     }
 
     @GetMapping("/searchProductPrice")
