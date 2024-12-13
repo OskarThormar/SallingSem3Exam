@@ -13,13 +13,13 @@ public class Day {
     @JoinColumn(name = "madplan_id")  // This is the foreign key column for Madplan
     private Madplan madplan;
 
-    @OneToOne()
+    @ManyToOne
     private Recipe morningRecipe;
 
-    @OneToOne()
+    @ManyToOne
     private Recipe lunchRecipe;
 
-    @OneToOne()
+    @ManyToOne
     private Recipe eveningRecipe;
 
     public Day() {

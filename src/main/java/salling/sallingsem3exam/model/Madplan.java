@@ -13,7 +13,7 @@ public class Madplan {
     private int id;
     private String name;
     private double price;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "madplan", orphanRemoval = true)
+    @ManyToMany
     List<Day> days = new ArrayList<>();
 
 

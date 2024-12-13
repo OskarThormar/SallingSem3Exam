@@ -19,18 +19,19 @@ import java.util.List;
 public class InitData implements CommandLineRunner {
 
     @Autowired
-    private MadplanInterface madplanRepository;
+    private MadplanInterface madplanInterface;
 
     @Autowired
-    private RecipeInterface recipeRepository;
+    private RecipeInterface recipeInterface;
 
     @Autowired
-    private IngredientInterface ingredientsRepository;
+    private IngredientInterface ingredientsInterface;
 
     List<Recipe> morningRecipes = new ArrayList<>();
     List<Recipe> lunchRecipes = new ArrayList<>();
     List<Recipe> dinnerRecipes = new ArrayList<>();
     List<Recipe> allRecipes = new ArrayList<>();
+    List<Ingredients> allIngredients = new ArrayList<>();
 
     @Autowired
     private DayInterface dayRepository;
@@ -39,106 +40,77 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         dayRepository.deleteAll();
-        recipeRepository.deleteAll();
-        ingredientsRepository.deleteAll();
-        madplanRepository.deleteAll();
+        recipeInterface.deleteAll();
+        ingredientsInterface.deleteAll();
+        madplanInterface.deleteAll();
 
         // Ingredients creation
         Ingredients ing1 = new Ingredients("Tomato", 1.5, "kg", 2);
         Ingredients ing2 = new Ingredients("Cheese", 3.0, "kg", 1);
         Ingredients ing3 = new Ingredients("Bread", 2.0, "loaf", 1);
         Ingredients ing4 = new Ingredients("Lettuce", 1.0, "head", 1);
-
-        List<Ingredients> allIngredients = new ArrayList<>();
+        Ingredients ing6 = new Ingredients("test1", 1.0, "head", 1);
+        Ingredients ing7 = new Ingredients("test2", 1.0, "head", 1);
 
         allIngredients.add(ing1);
         allIngredients.add(ing2);
         allIngredients.add(ing3);
         allIngredients.add(ing4);
+        allIngredients.add(ing6);
+        allIngredients.add(ing7);
+
+        List<Ingredients> allIngredients2 = new ArrayList<>();
+        List<Ingredients> allIngredients3 = new ArrayList<>();
+
+        allIngredients2.add(ing6);
+        allIngredients3.add(ing7);
+
+        ingredientsInterface.saveAll(allIngredients);
 
         Recipe recipe1 = new Recipe("Cheese Sandwich", 5.5, "morning");
         Recipe recipe2 = new Recipe("Veggie Sandwich", 4.0,"lunch");
         Recipe recipe3 = new Recipe("non Veggie Sandwich", 4.0,"dinner");
 
         recipe1.setIngredientsList(allIngredients);
-        recipe2.setIngredientsList(allIngredients);
-        recipe3.setIngredientsList(allIngredients);
+        recipe2.setIngredientsList(allIngredients2);
+        recipe3.setIngredientsList(allIngredients3);
+
+        allRecipes.add(recipe1);
+        allRecipes.add(recipe2);
+        allRecipes.add(recipe3);
+
+        recipeInterface.saveAll(allRecipes);
 
         for(Recipe recipe : allRecipes){
             if(recipe.getMealTime().equalsIgnoreCase("morning")){
                 morningRecipes.add(recipe);
+                break;
             }
             if(recipe.getMealTime().equalsIgnoreCase("lunch")){
                 lunchRecipes.add(recipe);
+                break;
             }
             if(recipe.getMealTime().equalsIgnoreCase("dinner")){
                 dinnerRecipes.add(recipe);
+                break;
             }
         }
-
-
-
 
         // Madplan creation
         Madplan m1 = new Madplan();
         //m1.setRecipeList(new ArrayList<>());
         m1.setName("Simple Meal Plan");
         m1.setPrice(15.0);
-        createDays1(6, m1);
-        //m1.setAmountOfDays(7);
-
-        // int var = 0;
-        // for (int i = 0; i < userInput; i++) {
-        //     Day day = new Day;
-        //     day.setName("day" + var);
-        //     var++;
-        // }
-        //
-        // for(Day day : daysList){
-        //     if(day.getMorning() == null){
-        //         day.setMorning(morningList.get(randomInt));
-        //     }
-        //     if(day.getLunch())
-        // }
-//
-//        List<String> days = new ArrayList<>();
-//        days.add("morgenmad_1");
-//        days.add("middag_1");
-//        days.add("aften_1");
-//        days.add("Dag_4");
-//        days.add("Dag_5");
-//        days.add("Dag_6");
-//        days.add("Dag_7");
-//
-//        //m1.setDays(days); // Assign the list of days to Madplan
-//
-//        // Adding recipes to Madplan
-//        m1.getRecipeList().add(recipe1);
-//        m1.getRecipeList().add(recipe2);
-//
-//        madplanRepository.save(m1);
-//
-//        // Additional Madplan for demonstration
-//        Madplan m2 = new Madplan();
-//        m2.setRecipeList(new ArrayList<>());
-//        m2.setName("Advanced Meal Plan");
-//        m2.setPrice(30.0);
-//        m2.setAmountOfDays(7);
-//
-//        // Adding recipes to Madplan
-//        m2.getRecipeList().add(recipe1); // Cheese Sandwich
-//        m2.getRecipeList().add(recipe2); // Veggie Sandwich
-
-        //madplanRepository.save(m2);
-        madplanRepository.save(m1);
+        createDays(6, m1);
         dayRepository.saveAll(m1.getDays());
+        madplanInterface.save(m1);
 
         System.out.println("Sample data initialized");
 
     }
 
     public void getRecipeList() {
-        List<Recipe> recipeList = recipeRepository.findAll();
+        List<Recipe> recipeList = recipeInterface.findAll();
         for (Recipe recipe : recipeList) {
             System.out.println(recipe.toString());
         }

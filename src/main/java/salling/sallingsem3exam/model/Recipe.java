@@ -12,7 +12,7 @@ public class Recipe {
     private int id;
     private String name;
     private String mealTime;
-    @OneToMany
+    @ManyToMany
     private List<Ingredients> ingredientsList;
     private double price;
 
