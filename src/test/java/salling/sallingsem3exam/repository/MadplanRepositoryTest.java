@@ -29,9 +29,9 @@ class MadplanRepositoryTest {
         Recipe lunch = new Recipe("Lunch Recipe", "lunch");
         Recipe evening = new Recipe("Evening Recipe", "evening");
 
-        madplanRepository.recipeList.add(morning);
-        madplanRepository.recipeList.add(lunch);
-        madplanRepository.recipeList.add(evening);
+        madplanRepository.allRecipes.add(morning);
+        madplanRepository.allRecipes.add(lunch);
+        madplanRepository.allRecipes.add(evening);
 
         // Act
         madplanRepository.createMadplan(madplan);
@@ -52,8 +52,8 @@ class MadplanRepositoryTest {
         Recipe morning = new Recipe("Morning Recipe", "morning");
         Recipe evening = new Recipe("Evening Recipe", "evening");
 
-        madplanRepository.recipeList.add(morning);
-        madplanRepository.recipeList.add(evening);
+        madplanRepository.allRecipes.add(morning);
+        madplanRepository.allRecipes.add(evening);
 
         // Act & Assert
         Exception exception = assertThrows(IllegalStateException.class, () -> {
@@ -73,9 +73,9 @@ class MadplanRepositoryTest {
         Recipe lunch = new Recipe("Lunch Recipe", "lunch");
         Recipe evening = new Recipe("Evening Recipe", "evening");
 
-        madplanRepository.recipeList.add(morning);
-        madplanRepository.recipeList.add(lunch);
-        madplanRepository.recipeList.add(evening);
+        madplanRepository.allRecipes.add(morning);
+        madplanRepository.allRecipes.add(lunch);
+        madplanRepository.allRecipes.add(evening);
 
         // Act
         madplanRepository.createMadplan(madplan);
@@ -94,9 +94,9 @@ class MadplanRepositoryTest {
         Recipe lunch = new Recipe("Lunch Recipe", "lunch");
         Recipe evening = new Recipe("Evening Recipe", "evening");
 
-        madplanRepository.recipeList.add(morning);
-        madplanRepository.recipeList.add(lunch);
-        madplanRepository.recipeList.add(evening);
+        madplanRepository.allRecipes.add(morning);
+        madplanRepository.allRecipes.add(lunch);
+        madplanRepository.allRecipes.add(evening);
 
         // Act
         madplanRepository.createMadplan(madplan);

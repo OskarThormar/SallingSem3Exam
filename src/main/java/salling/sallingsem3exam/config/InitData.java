@@ -15,16 +15,12 @@ import salling.sallingsem3exam.repository.RecipeInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class InitData implements CommandLineRunner {
 
-    @Autowired
     private MadplanInterface madplanInterface;
 
-    @Autowired
     private RecipeInterface recipeInterface;
 
-    @Autowired
     private IngredientInterface ingredientsInterface;
 
     List<Recipe> morningRecipes = new ArrayList<>();
@@ -33,7 +29,6 @@ public class InitData implements CommandLineRunner {
     List<Recipe> allRecipes = new ArrayList<>();
     List<Ingredients> allIngredients = new ArrayList<>();
 
-    @Autowired
     private DayInterface dayRepository;
 
     @Override
@@ -52,57 +47,6 @@ public class InitData implements CommandLineRunner {
         Ingredients ing6 = new Ingredients("test1", 1.0, "head", 1);
         Ingredients ing7 = new Ingredients("test2", 1.0, "head", 1);
 
-        allIngredients.add(ing1);
-        allIngredients.add(ing2);
-        allIngredients.add(ing3);
-        allIngredients.add(ing4);
-        allIngredients.add(ing6);
-        allIngredients.add(ing7);
-
-        List<Ingredients> allIngredients2 = new ArrayList<>();
-        List<Ingredients> allIngredients3 = new ArrayList<>();
-
-        allIngredients2.add(ing6);
-        allIngredients3.add(ing7);
-
-        ingredientsInterface.saveAll(allIngredients);
-
-        Recipe recipe1 = new Recipe("Cheese Sandwich", 5.5, "morning");
-        Recipe recipe2 = new Recipe("Veggie Sandwich", 4.0,"lunch");
-        Recipe recipe3 = new Recipe("non Veggie Sandwich", 4.0,"dinner");
-
-        recipe1.setIngredientsList(allIngredients);
-        recipe2.setIngredientsList(allIngredients2);
-        recipe3.setIngredientsList(allIngredients3);
-
-        allRecipes.add(recipe1);
-        allRecipes.add(recipe2);
-        allRecipes.add(recipe3);
-
-        recipeInterface.saveAll(allRecipes);
-
-        for(Recipe recipe : allRecipes){
-            if(recipe.getMealTime().equalsIgnoreCase("morning")){
-                morningRecipes.add(recipe);
-            }
-            if(recipe.getMealTime().equalsIgnoreCase("lunch")){
-                lunchRecipes.add(recipe);
-            }
-            if(recipe.getMealTime().equalsIgnoreCase("dinner")){
-                dinnerRecipes.add(recipe);
-            }
-        }
-
-        // Madplan creation
-        Madplan m1 = new Madplan();
-        //m1.setRecipeList(new ArrayList<>());
-        m1.setName("Simple Meal Plan");
-        m1.setPrice(15.0);
-        createDays(6, m1);
-        dayRepository.saveAll(m1.getDays());
-        madplanInterface.save(m1);
-
-        System.out.println("Sample data initialized");
 
     }
 
@@ -166,6 +110,61 @@ public class InitData implements CommandLineRunner {
             // Add the day to Madplan
             madplan.getDays().add(day);
         }
+    }
+
+    public void compileData(){
+//        allIngredients.add(ing1);
+//        allIngredients.add(ing2);
+//        allIngredients.add(ing3);
+//        allIngredients.add(ing4);
+//        allIngredients.add(ing6);
+//        allIngredients.add(ing7);
+
+        List<Ingredients> allIngredients2 = new ArrayList<>();
+        List<Ingredients> allIngredients3 = new ArrayList<>();
+
+      //  allIngredients2.add(ing6);
+      //  allIngredients3.add(ing7);
+
+        ingredientsInterface.saveAll(allIngredients);
+
+        Recipe recipe1 = new Recipe("Cheese Sandwich", 5.5, "morning");
+        Recipe recipe2 = new Recipe("Veggie Sandwich", 4.0,"lunch");
+        Recipe recipe3 = new Recipe("non Veggie Sandwich", 4.0,"dinner");
+
+        recipe1.setIngredientsList(allIngredients);
+        recipe2.setIngredientsList(allIngredients2);
+        recipe3.setIngredientsList(allIngredients3);
+
+        allRecipes.add(recipe1);
+        allRecipes.add(recipe2);
+        allRecipes.add(recipe3);
+
+        recipeInterface.saveAll(allRecipes);
+
+        for(Recipe recipe : allRecipes){
+            if(recipe.getMealTime().equalsIgnoreCase("morning")){
+                morningRecipes.add(recipe);
+            }
+            if(recipe.getMealTime().equalsIgnoreCase("lunch")){
+                lunchRecipes.add(recipe);
+            }
+            if(recipe.getMealTime().equalsIgnoreCase("dinner")){
+                dinnerRecipes.add(recipe);
+            }
+        }
+
+        // Madplan creation
+        Madplan m1 = new Madplan();
+        //m1.setRecipeList(new ArrayList<>());
+        m1.setName("Simple Meal Plan");
+        m1.setPrice(15.0);
+        createDays(6, m1);
+        dayRepository.saveAll(m1.getDays());
+        madplanInterface.save(m1);
+
+        System.out.println("Sample data initialized");
+
     }
 
 
