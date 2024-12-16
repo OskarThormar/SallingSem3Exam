@@ -1,5 +1,7 @@
 package salling.sallingsem3exam.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -13,7 +15,9 @@ public class Madplan {
     private int id;
     private String name;
     private double price;
-    @OneToMany
+    private int day;
+    @OneToMany(mappedBy = "madplan", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     List<Day> days = new ArrayList<>();
 
 
@@ -25,6 +29,10 @@ public class Madplan {
 
     public Madplan(){
 
+    }
+
+    public int getDay() {
+        return day;
     }
 
     public List<Day> getDays() {

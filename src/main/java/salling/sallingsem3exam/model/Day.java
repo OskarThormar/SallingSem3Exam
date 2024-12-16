@@ -1,5 +1,6 @@
 package salling.sallingsem3exam.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +12,7 @@ public class Day {
 
     @ManyToOne
     @JoinColumn(name = "madplan_id")  // This is the foreign key column for Madplan
+    @JsonIgnore
     private Madplan madplan;
 
     @ManyToOne

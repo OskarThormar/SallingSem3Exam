@@ -14,13 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
+@Component
 public class InitData2 implements CommandLineRunner {
 
+    @Autowired
     private MadplanInterface madplanInterface;
 
+    @Autowired
     private RecipeInterface recipeInterface;
 
+    @Autowired
     private IngredientInterface ingredientsInterface;
 
     private DayInterface dayRepository;
@@ -33,11 +36,6 @@ public class InitData2 implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Clear all data
-        dayRepository.deleteAll();
-        recipeInterface.deleteAll();
-        ingredientsInterface.deleteAll();
-        madplanInterface.deleteAll();
 
         Random random = new Random();
 

@@ -24,7 +24,20 @@ public class MadplanRepository {
     public List<Recipe> allRecipes = new ArrayList<>();
     private List<Ingredients> allIngredients = new ArrayList<>();
 
+    private List<Madplan> allMadplans = new ArrayList<>();
+
     public MadplanRepository() {
+    }
+
+    @Autowired
+    public MadplanRepository(IngredientInterface ingredientInterface,
+                             RecipeInterface recipeInterface,
+                             MadplanInterface madplanInterface,
+                             DayInterface dayInterface) {
+        this.ingredientInterface = ingredientInterface;
+        this.recipeInterface = recipeInterface;
+        this.madplanInterface = madplanInterface;
+        this.dayInterface = dayInterface;
     }
 
     public List<Recipe> getAllRecipes(){
@@ -39,28 +52,21 @@ public class MadplanRepository {
         return allIngredients;
     }
 
-    public double calculatePrice() {
-        return 1;
+    public void saveMadplan(Madplan newMadplan){
+        madplanInterface.save(newMadplan);
     }
 
-    public List<Madplan> getMadplan() {
-        Recipe test1 = new Recipe("test1", "morning");
-        Recipe test2 = new Recipe("test2", "evening");
-        Recipe test3 = new Recipe("test3", "lunch");
-        Recipe test4 = new Recipe("test4", "lunch");
-        Recipe test5 = new Recipe("test5", "evening");
-        Recipe test6 = new Recipe("test6", "morning");
-        Recipe test7 = new Recipe("test7", "morning");
+    public void saveMadPlanDays(Madplan madplan){
+        dayInterface.saveAll(madplan.getDays());
+    }
 
-        allRecipes.add(test1);
-        allRecipes.add(test2);
-        allRecipes.add(test3);
-        allRecipes.add(test4);
-        allRecipes.add(test5);
-        allRecipes.add(test6);
-        allRecipes.add(test7);
+    public List<Madplan> getAllMadplans(){
+        allMadplans = madplanInterface.findAll();
+        return allMadplans;
+    }
 
-        return madplanList;
+    public double calculatePrice() {
+        return 1;
     }
 
     public Madplan findNameById(int id) {
