@@ -1,11 +1,12 @@
-package repository;
+package salling.sallingsem3exam.repository;
 
-import model.Ingredients;
-import model.Recipe;
+import org.springframework.stereotype.Repository;
+import salling.sallingsem3exam.model.Ingredients;
+import salling.sallingsem3exam.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class RecipeRepository {
     private ArrayList<Recipe> recipes;
     private Recipe recipe;

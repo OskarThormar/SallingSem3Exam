@@ -1,4 +1,4 @@
-package model;
+package salling.sallingsem3exam.model;
 
 import java.util.List;
 

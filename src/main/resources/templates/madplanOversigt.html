@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Madplaner</title>
+    <link rel="stylesheet" href="/madplanOversigt.css">
+</head>
+<body>
+
+<h1>test</h1>
+
+<ul id="madplan-list">
+</ul>
+
+<!-- brug inspiration fra bio-javascript til lister af oprettet madplaner
+<script>
+    fetch('/api/cinema/movies')
+        .then(response => response.json())
+        .then(movies => {
+            const moviesList = document.getElementById('movies-list');
+            movies.forEach(movie => {
+                const movieItem = document.createElement('li');
+
+                movieItem.innerHTML = `
+                        <a href="movieDetails/view/${movie.id}" class="movie-link">
+                        <div class="movie-title">${movie.name}</div>
+                        <div class="movie-genre">${movie.genre}</div>
+                        <div class="movie-duration">${movie.duration} mins</div>
+                        <div class="movie-ageRequirement">Age requirement: ${movie.ageRequirement}</div>
+                        </a>
+                        `;
+
+                moviesList.appendChild(movieItem);
+            });
+        })
+        .catch(error => console.error('Error fetching movies:', error));
+</script>
+
+-->
+
+
+
+
+<a href="/opretMadplan">
+<button type="button">Opret madplan</button>
+</a>
+</body>
+</html>

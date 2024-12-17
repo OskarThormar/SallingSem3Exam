@@ -1,13 +1,10 @@
-package controller;
+package salling.sallingsem3exam.controller;
 
-import model.Recipe;
+import salling.sallingsem3exam.model.Recipe;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import service.MadplanService;
-import service.RecipeService;
+import org.springframework.web.bind.annotation.*;
+import salling.sallingsem3exam.service.MadplanService;
+import salling.sallingsem3exam.service.RecipeService;
 
 import java.util.List;
 
@@ -35,5 +32,25 @@ public class ApiController {
     @GetMapping("/")
     public String index() {
         return "index";
+    }
+
+    @GetMapping("/madplanOversigt")
+    public String madplanOversigt() {
+        return "madplanOversigt";
+    }
+
+    @GetMapping("/madplan")
+    public String madplan() {
+        return "madplan";
+    }
+
+    @GetMapping("/opretMadplan")
+    public String opretMadplan() {
+        return "opretMadplan";
+    }
+
+    @PostMapping("/opretMadplan")
+    public String opretMadplanSubmit() {
+        return "redirect:/madplanOversigt";
     }
 }

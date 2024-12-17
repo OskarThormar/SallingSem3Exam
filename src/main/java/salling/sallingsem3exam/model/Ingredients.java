@@ -1,4 +1,4 @@
-package model;
+package salling.sallingsem3exam.model;
 
 public class Ingredients {
     private int id;
