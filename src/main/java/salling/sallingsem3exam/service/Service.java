@@ -1,17 +1,16 @@
 package salling.sallingsem3exam.service;
 
-import org.springframework.stereotype.Service;
 import salling.sallingsem3exam.model.Day;
 import salling.sallingsem3exam.model.Madplan;
 import salling.sallingsem3exam.model.Recipe;
-import salling.sallingsem3exam.repository.MadplanRepository;
+import salling.sallingsem3exam.repository.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Service
-public class RecipeService {
+@org.springframework.stereotype.Service
+public class Service {
     private List<Recipe> allRecipes = new ArrayList<>();
 
     private List<Recipe> morningRecipes = new ArrayList<>();
@@ -19,14 +18,14 @@ public class RecipeService {
     private List<Recipe> dinnerRecipes = new ArrayList<>();
 
     private List<Madplan> allMadplans = new ArrayList<>();
-    private MadplanRepository madplanRepository;
+    private Repository repository;
 
-    public RecipeService(MadplanRepository madplanRepository){
-        this.madplanRepository = madplanRepository;
+    public Service(Repository repository){
+        this.repository = repository;
     }
 
     public void createMadPlan(Madplan newMadplan){
-        allRecipes = madplanRepository.getAllRecipes();
+        allRecipes = repository.getAllRecipes();
 
         Madplan madplan = newMadplan;
 
@@ -79,8 +78,8 @@ public class RecipeService {
         newMadplan.setPrice(madPlanPrice);
 
         allMadplans.add(newMadplan);
-        madplanRepository.saveMadplan(newMadplan);
-        madplanRepository.saveMadPlanDays(newMadplan);
+        repository.saveMadplan(newMadplan);
+        repository.saveMadPlanDays(newMadplan);
     }
 
     public Madplan getMadPlanByID(int ID){
@@ -89,10 +88,36 @@ public class RecipeService {
         for(Madplan madplan : allMadplans){
             if(madplan.getId() == ID){
                 madplanFound = madplan;
+                break;
             }
         }
 
         return madplanFound;
+    }
+
+    public void deleteMadPlan(int ID){
+        Madplan madplanToBeDeleted = null;
+
+        for(Madplan madplan : allMadplans){
+            if(madplan.getId() == ID){
+                madplanToBeDeleted = madplan;
+            }
+        }
+
+        if(!madplanToBeDeleted.equals(null)){
+            allMadplans.remove(madplanToBeDeleted);
+            repository.removeMadplan(madplanToBeDeleted);
+        }
+    }
+
+    public void updateMadplan(int ID, Madplan updatedMadplan){
+        Madplan madplan = repository.findMadPlanToUpdate(ID);
+
+        if(madplan != null){
+            madplan.setName(updatedMadplan.getName());
+            // Add functionality to also update amount of days
+            repository.saveMadplan(madplan);
+        }
     }
 
     public List<Madplan> getAllMadplans(){

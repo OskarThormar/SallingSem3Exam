@@ -16,7 +16,7 @@ public class Madplan {
     private String name;
     private double price;
     private int day;
-    @OneToMany(mappedBy = "madplan", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "madplan", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     List<Day> days = new ArrayList<>();
 

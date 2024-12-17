@@ -10,13 +10,13 @@ import java.util.ArrayList;
 
         import static org.junit.jupiter.api.Assertions.*;
 
-class MadplanRepositoryTest {
+class RepositoryTest {
 
-    private MadplanRepository madplanRepository;
+    private Repository repository;
 
     @BeforeEach
     void setUp() {
-        madplanRepository = new MadplanRepository();
+        repository = new Repository();
     }
 
     @Test
@@ -29,12 +29,12 @@ class MadplanRepositoryTest {
         Recipe lunch = new Recipe("Lunch Recipe", "lunch");
         Recipe evening = new Recipe("Evening Recipe", "evening");
 
-        madplanRepository.allRecipes.add(morning);
-        madplanRepository.allRecipes.add(lunch);
-        madplanRepository.allRecipes.add(evening);
+        repository.allRecipes.add(morning);
+        repository.allRecipes.add(lunch);
+        repository.allRecipes.add(evening);
 
         // Act
-        madplanRepository.createMadplan(madplan);
+        repository.createMadplan(madplan);
 
         // Assert
         assertNotNull(madplan.getMealTimeList());
@@ -52,12 +52,12 @@ class MadplanRepositoryTest {
         Recipe morning = new Recipe("Morning Recipe", "morning");
         Recipe evening = new Recipe("Evening Recipe", "evening");
 
-        madplanRepository.allRecipes.add(morning);
-        madplanRepository.allRecipes.add(evening);
+        repository.allRecipes.add(morning);
+        repository.allRecipes.add(evening);
 
         // Act & Assert
         Exception exception = assertThrows(IllegalStateException.class, () -> {
-            madplanRepository.createMadplan(madplan);
+            repository.createMadplan(madplan);
         });
 
         assertTrue(exception.getMessage().contains("Missing recipe for lunch meal"));
@@ -73,15 +73,15 @@ class MadplanRepositoryTest {
         Recipe lunch = new Recipe("Lunch Recipe", "lunch");
         Recipe evening = new Recipe("Evening Recipe", "evening");
 
-        madplanRepository.allRecipes.add(morning);
-        madplanRepository.allRecipes.add(lunch);
-        madplanRepository.allRecipes.add(evening);
+        repository.allRecipes.add(morning);
+        repository.allRecipes.add(lunch);
+        repository.allRecipes.add(evening);
 
         // Act
-        madplanRepository.createMadplan(madplan);
+        repository.createMadplan(madplan);
 
         // Assert
-        assertTrue(madplanRepository.getMadplan().contains(madplan), "Madplan should be added to the repository");
+        assertTrue(repository.getMadplan().contains(madplan), "Madplan should be added to the repository");
     }
 
     @Test
@@ -94,12 +94,12 @@ class MadplanRepositoryTest {
         Recipe lunch = new Recipe("Lunch Recipe", "lunch");
         Recipe evening = new Recipe("Evening Recipe", "evening");
 
-        madplanRepository.allRecipes.add(morning);
-        madplanRepository.allRecipes.add(lunch);
-        madplanRepository.allRecipes.add(evening);
+        repository.allRecipes.add(morning);
+        repository.allRecipes.add(lunch);
+        repository.allRecipes.add(evening);
 
         // Act
-        madplanRepository.createMadplan(madplan);
+        repository.createMadplan(madplan);
 
         // Assert
         assertNotNull(madplan.getRecipeListForMultipleDays());
@@ -116,7 +116,7 @@ class MadplanRepositoryTest {
     @Test
     void testGetMadplanContainsTestMadplan() {
         // Get the list of Madplans
-        List<Madplan> madplans = madplanRepository.getMadplan();
+        List<Madplan> madplans = repository.getMadplan();
 
         // Check if the list is not empty
         assertFalse(madplans.isEmpty(), "Madplan list should not be empty");
