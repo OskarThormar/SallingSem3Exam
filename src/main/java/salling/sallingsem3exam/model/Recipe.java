@@ -1,5 +1,6 @@
 package salling.sallingsem3exam.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class Recipe {
     private String name;
     private String mealTime;
     @ManyToMany
+    @JsonIgnore
     private List<Ingredients> ingredientsList;
     private double price;
 

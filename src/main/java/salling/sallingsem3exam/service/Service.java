@@ -41,16 +41,17 @@ public class Service {
             }
         }
 
-        int dayName = 0;
+        int dayName = 1;
         for(int i = 0 ; i < newMadplan.getDay() ; i++){
             Day day = new Day();
-            day.setName("day" + dayName);
+            day.setName("day " + dayName);
             dayName++;
 
             day.setMadplan(newMadplan);
             newMadplan.getDays().add(day);
         }
 
+        double priceForDay = 0;
 
         for (Day day : madplan.getDays()) {
             Random random = new Random();
@@ -67,6 +68,10 @@ public class Service {
                 int randomRecipe = random.nextInt(lunchRecipes.size());
                 day.setLunchRecipe(lunchRecipes.get(randomRecipe));
             }
+
+            priceForDay = day.getMorningRecipe().getPrice() + day.getLunchRecipe().getPrice() + day.getEveningRecipe().getPrice();
+
+            day.setFullPriceForDay(Math.round(priceForDay));
         }
 
         double madPlanPrice = 0;
@@ -75,7 +80,7 @@ public class Service {
             madPlanPrice += day.getLunchRecipe().getPrice() + day.getMorningRecipe().getPrice() + day.getEveningRecipe().getPrice();
         }
 
-        newMadplan.setPrice(madPlanPrice);
+        newMadplan.setPrice(Math.round(madPlanPrice));
 
         allMadplans.add(newMadplan);
         repository.saveMadplan(newMadplan);
@@ -118,6 +123,18 @@ public class Service {
             // Add functionality to also update amount of days
             repository.saveMadplan(madplan);
         }
+    }
+
+    public List<Day> getAllDaysFromMadplan(int ID){
+        List<Day> listOfDays = new ArrayList<>();
+
+        for(Madplan madplan : allMadplans){
+            if(madplan.getId() == ID){
+                listOfDays = madplan.getDays();
+            }
+        }
+
+        return listOfDays;
     }
 
     public List<Madplan> getAllMadplans(){

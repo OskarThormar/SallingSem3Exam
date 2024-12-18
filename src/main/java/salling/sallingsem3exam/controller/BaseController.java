@@ -21,7 +21,7 @@ public class BaseController {
         return "createFoodPlan";
     }
 
-    @GetMapping("/foodPlan/{ID}")
+    @GetMapping("/foodplan/{ID}")
     public String madplanDetails(@PathVariable int ID){
         return "foodPlan";
     }

@@ -2,7 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Plans</title>
+    <style>
+        .madplan {
+            cursor: pointer;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .madplan:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
 <h1>These are your food plans!</h1>
@@ -11,59 +27,67 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Hent alle madplaner fra API'et
+        // Fetch all food plans from the API
         fetch('/api/plan/foodPlan')
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('madplan-container');
 
-                // Iterer gennem hver madplan og opret et element for hver
+                // Iterate through each food plan and create an element for each
                 data.forEach(madplan => {
                     const madplanElement = document.createElement('div');
                     madplanElement.classList.add('madplan');
-                    madplanElement.setAttribute('data-id', madplan.id); // Tilføj data-id
+                    madplanElement.setAttribute('data-id', madplan.id); // Add data-id
 
-                    // Opret et span-element for madplanens navn
+                    // Add click event to navigate to another page
+                    madplanElement.addEventListener('click', () => {
+                        window.location.href = `/foodplan/${madplan.id}`;
+                    });
+
+                    // Create a span element for the food plan's name
                     const madplanName = document.createElement('span');
                     madplanName.classList.add('name');
                     madplanName.textContent = madplan.name;
                     madplanElement.appendChild(madplanName);
 
-                    // Opret Delete knap
+                    // Create Delete button
                     const deleteButton = document.createElement('button');
                     deleteButton.textContent = 'Delete';
                     deleteButton.addEventListener('click', (e) => {
-                        e.stopPropagation(); // Forhindrer klik på madplanen
+                        e.stopPropagation(); // Prevent click on the food plan
                         if (confirm(`Are you sure you want to delete the food plan "${madplan.name}"?`)) {
                             deleteMadPlan(madplan.id);
                         }
                     });
 
-                    // Opret Edit knap
+                    // Create Edit button
                     const editButton = document.createElement('button');
                     editButton.textContent = 'Edit';
                     editButton.addEventListener('click', (e) => {
-                        e.stopPropagation(); // Forhindrer klik på madplanen
+                        e.stopPropagation(); // Prevent click on the food plan
                         editMadPlan(madplan);
                     });
 
-                    // Tilføj knapperne til madplan-elementet
-                    madplanElement.appendChild(deleteButton);
-                    madplanElement.appendChild(editButton);
+                    // Add buttons to the food plan element
+                    const buttonsContainer = document.createElement('div');
+                    buttonsContainer.appendChild(editButton);
+                    buttonsContainer.appendChild(deleteButton);
 
-                    // Tilføj madplan-elementet til containeren
+                    madplanElement.appendChild(buttonsContainer);
+
+                    // Add the food plan element to the container
                     container.appendChild(madplanElement);
                 });
             })
             .catch(error => {
-                console.error('Error fetching madplan data:', error);
+                console.error('Error fetching food plan data:', error);
             });
 
         document.getElementById('createFoodPlanBtn').addEventListener('click', function () {
             window.location.href = 'createFoodplan';
         });
 
-        // Funktion til at slette en madplan
+        // Function to delete a food plan
         function deleteMadPlan(id) {
             fetch(`/api/plan/foodPlan/${id}`, {
                 method: 'DELETE'
@@ -71,7 +95,7 @@
                 .then(response => {
                     if (response.ok) {
                         alert('Food plan deleted successfully!');
-                        location.reload(); // Opdater siden for at fjerne den slettede madplan
+                        location.reload(); // Refresh the page to remove the deleted food plan
                     } else {
                         alert('Failed to delete the food plan.');
                     }
@@ -81,7 +105,7 @@
                 });
         }
 
-        // Funktion til at redigere en madplan
+        // Function to edit a food plan
         function editMadPlan(madplan) {
             const newName = prompt('Enter the new name for the food plan:', madplan.name);
             if (newName && newName !== madplan.name) {
@@ -96,10 +120,10 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            // Find madplanen i DOM'en og opdater dens navn
+                            // Find the food plan in the DOM and update its name
                             const madplanElement = document.querySelector(`[data-id="${madplan.id}"]`);
                             if (madplanElement) {
-                                madplanElement.querySelector('.name').textContent = newName; // Opdater navnet i DOM
+                                madplanElement.querySelector('.name').textContent = newName; // Update the name in the DOM
                             }
                             alert('Food plan updated successfully!');
                         } else {

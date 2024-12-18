@@ -27,7 +27,17 @@ public class Day {
     @JoinColumn(name = "evening_recipe_id")
     private Recipe eveningRecipe;
 
+    private double fullPriceForDay;
+
     public Day() {
+    }
+
+    public double getFullPriceForDay() {
+        return fullPriceForDay;
+    }
+
+    public void setFullPriceForDay(double fullPriceForDay) {
+        this.fullPriceForDay = fullPriceForDay;
     }
 
     public int getID() {

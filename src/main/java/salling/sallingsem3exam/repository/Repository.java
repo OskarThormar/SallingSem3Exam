@@ -57,7 +57,6 @@ public class Repository {
 
     public List<Ingredients> getAllIngredients(){
         allIngredients = ingredientInterface.findAll();
-
         return allIngredients;
     }
 

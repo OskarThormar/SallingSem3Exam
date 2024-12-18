@@ -2,11 +2,110 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madplan Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        #madplan-name {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: -10px;
+        }
+        .days-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .day {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+        }
+        .day h3 {
+            margin: 5px 0;
+        }
+        .price-container {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Madplan Details</h1>
+<h1>Madplan Details</h1>
+<div id="madplan-name"></div>
+<div class="days-container" id="days-container"></div>
+<div class="price-container" id="madplan-price"></div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.pathname.split('/').pop());
+        const madplanId = parseInt(urlParams, 10);
 
+        if (!isNaN(madplanId)) {
+            // Fetch the madplan details by ID
+            fetch(`/api/plan/foodPlan/${madplanId}`)
+                .then(response => response.json())
+                .then(madplan => {
+                    // Display the madplan name
+                    const madplanNameElement = document.getElementById('madplan-name');
+                    madplanNameElement.textContent = madplan.name;
+
+                    // Display the days in the madplan
+                    fetch(`/api/plan/foodPlan/${madplanId}/days`)
+                        .then(response => response.json())
+                        .then(days => {
+                            const daysContainer = document.getElementById('days-container');
+                            days.forEach(day => {
+                                const dayElement = document.createElement('div');
+                                dayElement.classList.add('day');
+
+                                // Create day details
+                                const dayName = document.createElement('h3');
+                                dayName.textContent = day.name;
+                                dayElement.appendChild(dayName);
+
+                                const morningRecipe = document.createElement('p');
+                                morningRecipe.textContent = `Morning Recipe: ${day.morningRecipe?.name || 'N/A'}`;
+                                dayElement.appendChild(morningRecipe);
+
+                                const lunchRecipe = document.createElement('p');
+                                lunchRecipe.textContent = `Lunch Recipe: ${day.lunchRecipe?.name || 'N/A'}`;
+                                dayElement.appendChild(lunchRecipe);
+
+                                const eveningRecipe = document.createElement('p');
+                                eveningRecipe.textContent = `Evening Recipe: ${day.eveningRecipe?.name || 'N/A'}`;
+                                dayElement.appendChild(eveningRecipe);
+
+                                const dayPrice = document.createElement('p');
+                                dayPrice.textContent = `Price for Day: ${day.fullPriceForDay}`;
+                                dayElement.appendChild(dayPrice);
+
+                                daysContainer.appendChild(dayElement);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching days:', error));
+
+                    // Display the total price for the madplan
+                    const madplanPriceElement = document.getElementById('madplan-price');
+                    madplanPriceElement.textContent = `Entire price for madplan is: ${madplan.price}`;
+                })
+                .catch(error => console.error('Error fetching madplan details:', error));
+        } else {
+            alert('Invalid Madplan ID');
+        }
+    });
+</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package salling.sallingsem3exam.controller;
 
 import org.springframework.web.bind.annotation.*;
+import salling.sallingsem3exam.model.Day;
 import salling.sallingsem3exam.model.Madplan;
 import salling.sallingsem3exam.service.Service;
 
@@ -40,5 +41,11 @@ public class ApiController {
     public Madplan updateMadPlan(@PathVariable int ID, @RequestBody Madplan madplanToBeUpdated){
         service.updateMadplan(ID, madplanToBeUpdated);
         return madplanToBeUpdated;
+    }
+
+    @GetMapping("/api/plan/foodPlan/{ID}/days")
+    public List<Day> showAmountOfDays(@PathVariable int ID){
+        List<Day> listOfDays = service.getAllDaysFromMadplan(ID);
+        return listOfDays;
     }
 }
