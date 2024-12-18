@@ -36,7 +36,7 @@ public class ApiController {
         service.deleteMadPlan(ID);
     }
 
-    @PutMapping("/api/plan/foodPLan/{ID}")
+    @PutMapping("/api/plan/foodPlan/{ID}")
     public Madplan updateMadPlan(@PathVariable int ID, @RequestBody Madplan madplanToBeUpdated){
         service.updateMadplan(ID, madplanToBeUpdated);
         return madplanToBeUpdated;
