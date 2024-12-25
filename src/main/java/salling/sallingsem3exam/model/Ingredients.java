@@ -1,4 +1,4 @@
-package model;
+package salling.sallingsem3exam.model;
 
 public class Ingredients {
     private int id;
@@ -12,6 +12,9 @@ public class Ingredients {
         this.price = price;
         this.unit = unit;
         this.quantity = quantity;
+    }
+
+    public Ingredients(String name, double price) {
     }
 
     public int getId() {
