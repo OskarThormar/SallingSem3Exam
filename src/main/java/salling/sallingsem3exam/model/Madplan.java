@@ -1,31 +1,47 @@
 package salling.sallingsem3exam.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Madplan {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private List<Recipe> recipeList;
     private String name;
     private double price;
-    private List[] days;
+    private int day;
+    @OneToMany(mappedBy = "madplan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    List<Day> days = new ArrayList<>();
+
 
     public Madplan(int id, List<Recipe> recipeList, String name, double price) {
         this.id = id;
-        this.recipeList = recipeList;
         this.name = name;
         this.price = price;
     }
 
+    public Madplan(){
+
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public List<Day> getDays() {
+        return days;
+    }
+
     public int getId() {
         return id;
-    }
 
-    public List<Recipe> getRecipeList() {
-        return recipeList;
-    }
-
-    public void setRecipeList(List<Recipe> recipeList) {
-        this.recipeList = recipeList;
     }
 
     public String getName() {
@@ -42,9 +58,5 @@ public class Madplan {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public void setAmountOfDays(int days) {
-        this.days = new List[days];
     }
 }

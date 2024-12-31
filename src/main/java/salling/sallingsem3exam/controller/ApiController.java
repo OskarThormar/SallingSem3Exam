@@ -1,5 +1,9 @@
 package salling.sallingsem3exam.controller;
 
+import org.springframework.web.bind.annotation.*;
+import salling.sallingsem3exam.model.Day;
+import salling.sallingsem3exam.model.Madplan;
+import salling.sallingsem3exam.service.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import salling.sallingsem3exam.model.Ingredients;
@@ -18,86 +22,94 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:8080") // Tillad kun anmodninger fra din frontend
-@Controller
+//@CrossOrigin(origins = "http://localhost:8080") // Tillad kun anmodninger fra din frontend
+@RestController
 public class ApiController {
   
-    private final MadplanService madplanService;
-    private final RecipeService recipeService;
+  
+    //@Value("${api.token}") // Token hentes fra application.properties
+    //private String apiToken;
 
-    @Value("${api.token}") // Token hentes fra application.properties
-    private String apiToken;
+    //private final RestTemplate restTemplate = new RestTemplate();
 
-    private final RestTemplate restTemplate = new RestTemplate();
-
-
-    public ApiController(MadplanService madplanService, RecipeService recipeService) {
-        this.madplanService = madplanService;
-        this.recipeService = recipeService;
+    private Service service;
+    public ApiController(Service service){
+        this.service = service;
+    }
+    @GetMapping("/api/plan/foodPlan")
+    public List<Madplan> parseMadplanToJson(){
+        List<Madplan> madplan = service.getAllMadplans();
+        return madplan;
     }
 
-
-    @GetMapping("/madplan/{id}/recipes")
-    @ResponseBody
-    public List<Recipe> getRecipesForMadplan(@PathVariable int id) {
-        return madplanService.getRecipesFromMadplan(id);
+    @PostMapping("/api/plan/foodPlan")
+    public Madplan createFoodplan(@RequestBody Madplan newMadplan){
+        service.createMadPlan(newMadplan);
+        return newMadplan;
     }
 
-    @GetMapping("/madplan/{id}/price")
-    @ResponseBody
-    public double getTotalPriceForMadplan(@PathVariable int id) {
-        return madplanService.calculateTotalPriceForMadplan(id);
+    @GetMapping("/api/plan/foodPlan/{ID}")
+    public Madplan getMadPlanByID(@PathVariable int ID){
+        Madplan madplanFound = service.getMadPlanByID(ID);
+        return madplanFound;
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
+    @DeleteMapping("/api/plan/foodPlan/{ID}")
+    public void deleteMadPlan(@PathVariable int ID){
+        service.deleteMadPlan(ID);
     }
 
-    @GetMapping("/searchpage")
-    public String searchPage() {
-        return "search";
+    @PutMapping("/api/plan/foodPlan/{ID}")
+    public Madplan updateMadPlan(@PathVariable int ID, @RequestBody Madplan madplanToBeUpdated){
+        service.updateMadplan(ID, madplanToBeUpdated);
+        return madplanToBeUpdated;
     }
 
-    @GetMapping("/api-token")
-    @ResponseBody
-    public String getApiToken() {
-        return "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query";
+    @GetMapping("/api/plan/foodPlan/{ID}/days")
+    public List<Day> showAmountOfDays(@PathVariable int ID){
+        List<Day> listOfDays = service.getAllDaysFromMadplan(ID);
+        return listOfDays;
     }
 
-    @GetMapping("/searchProductPrice")
-    public ResponseEntity<Double> getProductPrice(@RequestParam String query) {
-        RestTemplate restTemplate = new RestTemplate();
+    //@GetMapping("/api-token")
+    //@ResponseBody
+    //public String getApiToken() {
+    //    return "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query";
+    //}
 
-        try {
-            String sallingApiUrl = "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query="
-                    + URLEncoder.encode(query, StandardCharsets.UTF_8);
+    //@GetMapping("/searchProductPrice")
+    //public ResponseEntity<Double> getProductPrice(@RequestParam String query) {
+    //    RestTemplate restTemplate = new RestTemplate();
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setBearerAuth(apiToken); // Replace with actual token
-            headers.setContentType(MediaType.APPLICATION_JSON);
+    //    try {
+    //        String sallingApiUrl = "https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query="
+    //                + URLEncoder.encode(query, StandardCharsets.UTF_8);
 
-            HttpEntity<String> entity = new HttpEntity<>(headers);
+    //        HttpHeaders headers = new HttpHeaders();
+    //        headers.setBearerAuth(apiToken); // Replace with actual token
+    //        headers.setContentType(MediaType.APPLICATION_JSON);
 
-            ResponseEntity<String> response = restTemplate.exchange(
-                    sallingApiUrl,
-                    HttpMethod.GET,
-                    entity,
-                    String.class
-            );
+    //        HttpEntity<String> entity = new HttpEntity<>(headers);
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(response.getBody());
-            JsonNode suggestionsNode = rootNode.get("suggestions");
+    //        ResponseEntity<String> response = restTemplate.exchange(
+    //                sallingApiUrl,
+    //                HttpMethod.GET,
+    //                entity,
+    //                String.class
+    //        );
+
+   //         ObjectMapper objectMapper = new ObjectMapper();
+   //         JsonNode rootNode = objectMapper.readTree(response.getBody());
+   //         JsonNode suggestionsNode = rootNode.get("suggestions");
 
             // Return the price of the first suggestion, or null if no suggestions
-            if (suggestionsNode != null && suggestionsNode.isArray() && suggestionsNode.size() > 0) {
-                return ResponseEntity.ok(suggestionsNode.get(0).get("price").asDouble());
-            }
+   //         if (suggestionsNode != null && suggestionsNode.isArray() && suggestionsNode.size() > 0) {
+   //             return ResponseEntity.ok(suggestionsNode.get(0).get("price").asDouble());
+   //         }
 
-            return ResponseEntity.ok(null);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
+   //         return ResponseEntity.ok(null);
+   //     } catch (Exception e) {
+   //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+   //     }
+   // }
 }

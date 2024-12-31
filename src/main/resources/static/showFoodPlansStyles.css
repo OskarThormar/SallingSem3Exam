@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    background: #333;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 20px 0;
+    color: #f4f4f4;
+}
+
+#madplan-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.madplan {
+    background: #3a9d23;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    min-width: 300px;
+    height: 150px;
+    text-align: center;
+    font-size: 1rem;
+    white-space: normal;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.madplan:hover {
+    transform: scale(1.05);
+    background: rgb(47, 138, 39);
+}
+
+
+button {
+    background-color: rgb(47, 138, 39);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 20px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background-color: rgb(58, 157, 35);
+}
+
+@media (max-width: 768px) {
+    .madplan {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .madplan {
+        width: 100%;
+    }
+
+    button {
+        width: 80%;
+    }
+}
+
+.madplan button:first-child {
+    background-color: #333;
+    margin-right: 10px;
+}
+
+.madplan button:first-child:hover {
+    background-color: #333;
+}
+
+.madplan button:nth-child(2) {
+    background-color: #333;
+}
+
+.madplan button:nth-child(2):hover {
+    background-color: #333;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madplan Details</title>
+    <link rel="stylesheet" href="/foodPlanStyles.css">
+</head>
+<body>
+<h1>Madplan Details</h1>
+<div id="madplan-name"></div>
+<div class="days-container" id="days-container"></div>
+<div class="price-container" id="madplan-price"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.pathname.split('/').pop());
+        const madplanId = parseInt(urlParams, 10);
+
+        if (!isNaN(madplanId)) {
+            // Fetch the madplan details by ID
+            fetch(`/api/plan/foodPlan/${madplanId}`)
+                .then(response => response.json())
+                .then(madplan => {
+                    // Display the madplan name
+                    const madplanNameElement = document.getElementById('madplan-name');
+                    madplanNameElement.textContent = madplan.name;
+
+                    // Display the days in the madplan
+                    fetch(`/api/plan/foodPlan/${madplanId}/days`)
+                        .then(response => response.json())
+                        .then(days => {
+                            const daysContainer = document.getElementById('days-container');
+                            days.forEach(day => {
+                                const dayElement = document.createElement('div');
+                                dayElement.classList.add('day');
+
+                                // Create day details
+                                const dayName = document.createElement('h3');
+                                dayName.textContent = day.name;
+                                dayElement.appendChild(dayName);
+
+                                const morningRecipe = document.createElement('p');
+                                morningRecipe.textContent = `Morning Recipe: ${day.morningRecipe?.name || 'N/A'}`;
+                                dayElement.appendChild(morningRecipe);
+
+                                const lunchRecipe = document.createElement('p');
+                                lunchRecipe.textContent = `Lunch Recipe: ${day.lunchRecipe?.name || 'N/A'}`;
+                                dayElement.appendChild(lunchRecipe);
+
+                                const eveningRecipe = document.createElement('p');
+                                eveningRecipe.textContent = `Evening Recipe: ${day.eveningRecipe?.name || 'N/A'}`;
+                                dayElement.appendChild(eveningRecipe);
+
+                                const dayPrice = document.createElement('p');
+                                dayPrice.textContent = `Price for Day: ${day.fullPriceForDay}`;
+                                dayElement.appendChild(dayPrice);
+
+                                daysContainer.appendChild(dayElement);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching days:', error));
+
+                    // Display the total price for the madplan
+                    const madplanPriceElement = document.getElementById('madplan-price');
+                    madplanPriceElement.textContent = `Entire price for madplan is: ${madplan.price}`;
+                })
+                .catch(error => console.error('Error fetching madplan details:', error));
+        } else {
+            alert('Invalid Madplan ID');
+        }
+    });
+</script>
+</body>
+</html>

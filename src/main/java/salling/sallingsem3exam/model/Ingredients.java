@@ -1,6 +1,16 @@
 package salling.sallingsem3exam.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Ingredients {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
     private String name;
     private double price;
@@ -13,8 +23,9 @@ public class Ingredients {
         this.unit = unit;
         this.quantity = quantity;
     }
+  
+    public Ingredients() {
 
-    public Ingredients(String name, double price) {
     }
 
     public int getId() {
