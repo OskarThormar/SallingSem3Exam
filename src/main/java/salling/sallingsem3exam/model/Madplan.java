@@ -41,6 +41,7 @@ public class Madplan {
 
     public int getId() {
         return id;
+
     }
 
     public String getName() {
@@ -58,5 +59,4 @@ public class Madplan {
     public void setPrice(double price) {
         this.price = price;
     }
-
 }
