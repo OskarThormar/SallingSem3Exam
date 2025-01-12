@@ -4,23 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import salling.sallingsem3exam.model.Day;
 import salling.sallingsem3exam.model.Madplan;
 import salling.sallingsem3exam.service.Service;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import salling.sallingsem3exam.model.Ingredients;
-import salling.sallingsem3exam.model.Recipe;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import salling.sallingsem3exam.service.MadplanService;
-import salling.sallingsem3exam.service.RecipeService;
-import org.springframework.web.bind.annotation.ResponseBody;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+
 import java.util.List;
-import java.util.Map;
 
 //@CrossOrigin(origins = "http://localhost:8080") // Tillad kun anmodninger fra din frontend
 @RestController
