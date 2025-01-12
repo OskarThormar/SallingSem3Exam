@@ -1,4 +1,4 @@
-# Trin 1: Brug Maven til at bygge projektet
+# Trin 1: Brug Maven med Java 21 til at bygge projektet
 FROM maven:3.8.4-openjdk-21 AS build
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY src ./src
 # Byg applikationen
 RUN mvn clean package -DskipTests
 
-# Trin 2: Brug en letvægts Java-image til at køre appen
+# Trin 2: Brug en letvægts Java 21-image til at køre appen
 FROM openjdk:21-jdk-slim
 WORKDIR /app
 
