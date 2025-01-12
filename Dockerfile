@@ -1,5 +1,5 @@
 # Trin 1: Brug Maven til at bygge projektet
-FROM maven:3.8.4-openjdk-17 AS build
+FROM maven:3.8.4-openjdk-21 AS build
 WORKDIR /app
 
 # Kopier kun pom.xml først for at cache afhængigheder
