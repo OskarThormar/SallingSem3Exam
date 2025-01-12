@@ -15,7 +15,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Trin 2: Brug en letvægts Java-image til at køre appen
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Kopier den færdige JAR-fil fra build-stadiet
